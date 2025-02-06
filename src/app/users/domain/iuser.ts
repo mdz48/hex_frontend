@@ -7,5 +7,5 @@ export interface IUser {
     save(user: User): Observable<User>;
     update(id: number, user: User): Observable<User>;
     delete(id: number): Observable<void>;
-    login(email: string, password: string): Observable<boolean>;
+    login(email: string, password: string): Observable<User>;
 }

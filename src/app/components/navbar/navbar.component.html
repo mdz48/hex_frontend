@@ -1,0 +1,42 @@
+<header class="flex justify-center bg-white">    
+    <nav class="w-[80%] border flex justify-between items-center">
+        <div>
+            <!-- Logo -->
+        </div>
+        <div>
+            <ul class="flex justify-end">
+                <li class="p-4 cursor-pointer" (click)="goHome()">Inicio</li>
+                <li class="p-4 cursor-pointer" (click)="showDialog()">Publicar Libro</li>
+                <li class="p-4 cursor-pointer" (click)="goProfile()">Mi perfil</li>
+                <li class="p-4 cursor-pointer" (click)="logOut()">Cerrar sesión</li>
+            </ul>
+        </div>
+    </nav>
+</header>
+
+<p-dialog header="Publicar Libro" [(visible)]="visible" [modal]="true" [style]="{ width: '400px' }">
+    <form [formGroup]="bookForm" class="flex flex-col gap-4">
+        <div class="flex flex-col">
+            <label for="title">Título</label>
+            <input type="text" formControlName="title" class="border p-2">
+            <span *ngIf="bookForm.get('title')?.errors?.['required'] && bookForm.get('title')?.touched"
+                  class="text-red-500">Título es requerido</span>
+        </div>
+
+        <div class="flex flex-col">
+            <label for="description">Descripción</label>
+            <textarea formControlName="description" rows="4" class="border p-2"></textarea>
+            <span *ngIf="bookForm.get('description')?.errors?.['required'] && bookForm.get('description')?.touched"
+                  class="text-red-500">Descripción es requerida</span>
+        </div>
+
+        <div class="flex justify-end">
+            <button type="button" 
+                    [disabled]="!bookForm.valid"
+                    class="p-2 bg-blue-500 text-white rounded cursor-pointer hover:opacity-90"
+                    (click)="createBook()">
+                Publicar
+            </button>
+        </div>
+    </form>
+</p-dialog>

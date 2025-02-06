@@ -88,10 +88,15 @@ export class LoginComponent {
 
   onLogin() {
     if (this.loginForm.valid) {
-      const {email, password} = this.loginForm.value;
-      
+      const { email, password } = this.loginForm.value;
+
       this.loginUseCase.execute(email, password).subscribe({
         next: (success) => {
+          localStorage.setItem(
+            'currentUser',
+            JSON.stringify(success)
+          );
+          localStorage.setItem('temp', success?.id?.toString() || '');
           if (success) {
             this.messageService.add({
               severity: 'success',

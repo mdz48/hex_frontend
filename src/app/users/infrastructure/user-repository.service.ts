@@ -8,7 +8,7 @@ import { User } from '../domain/user';
   providedIn: 'root'
 })
 export class UserRepositoryService implements IUser {
-  private readonly API_URL = 'http://localhost:8080/users';
+  private API_URL = 'http://localhost:8080/users';
 
   constructor(private http: HttpClient) {}
 
@@ -32,7 +32,7 @@ export class UserRepositoryService implements IUser {
     return this.http.delete<void>(`${this.API_URL}/${id}`);
   }
 
-  login(email: string, password: string): Observable<boolean> {
-    return this.http.post<boolean>(`${this.API_URL}/login`, { email, password });
+  login(email: string, password: string): Observable<User> {
+    return this.http.post<User>(`${this.API_URL}/login`, { email, password });
   }
 }
