@@ -1,2 +1,25 @@
 /* You can add global styles to this file, and also import other style files */
 @import "tailwindcss";
+
+.p-dialog-mask {
+    backdrop-filter: blur(8px);
+    background-color: rgba(0, 0, 0, 0.4) !important;
+}
+
+.p-dialog {
+    background-color: white !important;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+    padding: 30px;
+}
+
+.p-dialog-content {
+    background-color: white !important;
+}
+
+.p-dialog-header {
+    background-color: white !important;
+}
+
+.p-dialog-footer {
+    background-color: white !important;
+}
