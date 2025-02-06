@@ -1,13 +1,13 @@
 <div>
     <div>
-        <h2 class="text-xl font-semibold mb-2">{{book.Title}}</h2>
-        <p class="text-gray-600 mb-2">Autor: {{book.Author}}</p>
-        <p class="text-gray-500">{{book.Description}}</p>
+        <h2 class="text-xl font-semibold mb-2">{{book.title}}</h2>
+        <p class="text-gray-600 mb-2 cursor-pointer hover:underline" (click)="goAuthorProfile(book)">Autor: {{book.author_name}}</p>
+        <p class="text-gray-500">{{book.description}}</p>
     </div>
-    <div class="flex justify-end mt-4" *ngIf="currentUser.id != book.Author">
+    <div class="flex justify-end mt-4" *ngIf="currentUser.id != book.author_id">
         <button class="p-2 bg-blue-500 text-white rounded cursor-pointer hover:opacity-90">Favoritos</button>
     </div>
-    <div class="flex justify-end mt-4" *ngIf="currentUser.id == book.Author">
+    <div class="flex justify-end mt-4" *ngIf="currentUser.id == book.author_id">
         <button class="p-2 bg-blue-500 text-white rounded cursor-pointer hover:opacity-90" (click)="onDelete(book)">
             Eliminar
         </button>

@@ -24,12 +24,12 @@ export class BookRespositoryService implements IBook {
     return this.http.get<Book>(`${this.API_URL}/${id}`);
   }
 
-  save(Title: string, Author: number, Description: string): Observable<Book> {
-    return this.http.post<Book>(this.API_URL,  {Title, Author, Description});
+  save(title: string, author: number, description: string): Observable<Book> {
+    return this.http.post<Book>(this.API_URL,  {title, author, description});
   }
 
   update(book: Book): Observable<Book> {
-    return this.http.put<Book>(`${this.API_URL}/${book.Id}`, book);
+    return this.http.put<Book>(`${this.API_URL}/${book.id}`, book);
   }
 
   delete(id: number): Observable<void> {

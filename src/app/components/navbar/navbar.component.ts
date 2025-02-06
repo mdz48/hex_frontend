@@ -58,7 +58,15 @@ export class NavbarComponent {
   }
 
   goProfile() {
-    this.router.navigate(['/profile']);
+    const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
+    localStorage.setItem('temp', currentUser.id.toString());
+    
+    // Si estamos en /profile, recargamos la página
+    if (this.router.url === '/profile') {
+      window.location.reload();
+    } else {
+      this.router.navigate(['/profile']);
+    }
   }
 
   logOut() {

@@ -17,9 +17,7 @@ export class ProfileComponent implements OnInit {
 
   constructor(private getBooksbyAuthor : GetBooksByAuthorUseCaseService) {}
 
-  ngOnInit(): void {
-    console.log('ID:', this.id);
-    
+  ngOnInit(): void {    
     this.getBooksbyAuthor.execute(Number(this.id)).subscribe({
       next: (response) => {
         console.log('Response:', response);
