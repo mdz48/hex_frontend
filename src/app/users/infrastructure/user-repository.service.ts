@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { IUser } from '../../domain/repositories/iuser';
-import { User } from '../../domain/models/user';
+import { IUser } from '../domain/iuser';
+import { User } from '../domain/user';
 
 @Injectable({
   providedIn: 'root'
 })
-export class UserRepositoryService {
-  private readonly API_URL = 'localhost:8080/users';
+export class UserRepositoryService implements IUser {
+  private readonly API_URL = 'http://localhost:8080/users';
 
   constructor(private http: HttpClient) {}
 
@@ -30,5 +30,9 @@ export class UserRepositoryService {
 
   delete(id: number): Observable<void> {
     return this.http.delete<void>(`${this.API_URL}/${id}`);
+  }
+
+  login(email: string, password: string): Observable<boolean> {
+    return this.http.post<boolean>(`${this.API_URL}/login`, { email, password });
   }
 }

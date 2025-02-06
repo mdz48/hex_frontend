@@ -1,5 +1,5 @@
 import { Observable } from "rxjs";
-import { User } from "../models/user";
+import { User } from "./user";
 
 export interface IUser {
     getAll(): Observable<User[]>;
@@ -7,4 +7,5 @@ export interface IUser {
     save(user: User): Observable<User>;
     update(id: number, user: User): Observable<User>;
     delete(id: number): Observable<void>;
+    login(email: string, password: string): Observable<boolean>;
 }
