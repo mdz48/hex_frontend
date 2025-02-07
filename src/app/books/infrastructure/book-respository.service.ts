@@ -36,5 +36,15 @@ export class BookRespositoryService implements IBook {
     return this.http.delete<void>(`${this.API_URL}/${id}`);
   }
 
+  addFavorite(userId: number, bookId: number): Observable<void> {
+    return this.http.post<void>(`${this.API_URL}/favorites`, {userId, bookId});
+  }
+
+  removeFavorite(userId: number, bookId: number): Observable<void> {
+    return this.http.delete<void>(`${this.API_URL}/favorites/${userId}/${bookId}`);
+  }
   
+  getFavorites(userId: number): Observable<Book[]> {
+    return this.http.get<Book[]>(`${this.API_URL}/favorites/${userId}`);
+  }
 }

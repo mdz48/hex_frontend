@@ -8,4 +8,7 @@ export interface IBook {
     update(book: Book): Observable<Book>;
     delete(id: number): Observable<void>;
     getBooksByAuthor(authorid: number): Observable<Book[]>;
+    addFavorite(userId: number, bookId: number ): Observable<void>;
+    removeFavorite(userId: number, bookId: number): Observable<void>;
+    getFavorites(userId: number): Observable<Book[]>;
 }
