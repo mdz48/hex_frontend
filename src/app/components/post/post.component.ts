@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Book } from '../../books/domain/book';
 import { CommonModule } from '@angular/common';
 import { User } from '../../users/domain/user';
@@ -6,6 +6,8 @@ import { DeleteBookUseCaseService } from '../../books/application/delete-book-us
 import { Router } from '@angular/router';
 import { AddFavoriteUseCaseService } from '../../books/application/add-favorite-use-case.service';
 import { PrimeIcons } from 'primeng/api';
+import { GetFavoritesUseCaseService } from '../../books/application/get-favorites-use-case.service';
+import { RemoveFavoriteUseCaseService } from '../../books/application/remove-favorite-use-case.service';
 
 @Component({
   selector: 'app-post',
@@ -13,15 +15,35 @@ import { PrimeIcons } from 'primeng/api';
   templateUrl: './post.component.html',
   styleUrl: './post.component.css'
 })
-export class PostComponent {
-  @Input() book !: Book
+export class PostComponent implements OnInit{
+  @Input() book!: Book
+  isFavorite: boolean = false;
   currentUser: User = JSON.parse(localStorage.getItem('currentUser') || '{}') as User;
 
-  constructor(private deleteUseCase : DeleteBookUseCaseService, private router : Router,
-    private addFavoriteUseCase : AddFavoriteUseCaseService,
-  ) {}
+  constructor(private deleteUseCase: DeleteBookUseCaseService,
+    private router: Router,
+    private addFavoriteUseCase: AddFavoriteUseCaseService,
+    private deleteBookUseCase: DeleteBookUseCaseService,
+    private get: GetFavoritesUseCaseService,
+    private removeFavoriteUseCase: RemoveFavoriteUseCaseService
+  ) { }
 
-  onDelete(book : Book) {
+  ngOnInit() {
+    this.checkIfFavorite();
+  }
+
+  checkIfFavorite() {
+    if (this.currentUser.id) {
+      this.get.execute(this.currentUser.id).subscribe({
+        next: (favorites) => {
+          this.isFavorite = favorites.some(fav => fav.id === this.book.id);
+        }
+      });
+    }
+  }
+
+
+  onDelete(book: Book) {
     this.deleteUseCase.execute(this.book.id).subscribe({
       next: () => {
         window.location.reload();
@@ -30,19 +52,26 @@ export class PostComponent {
     });
   }
 
-  goAuthorProfile(book : Book) {
+  goAuthorProfile(book: Book) {
     localStorage.setItem('temp', this.book.author_id.toString());
     this.router.navigate(['/profile']);
   }
 
-  onFavorite(book : Book) {
+  onFavorite(book: Book) {
     if (this.currentUser.id && this.book.id) {
-      this.addFavoriteUseCase.execute(this.currentUser.id, this.book.id).subscribe({
-        next: () => {
-          window.location.reload();
-        },
-        error: (error) => console.error('Error:', error)
-      });
+      if (!this.isFavorite) {
+        this.addFavoriteUseCase.execute(this.currentUser.id, this.book.id).subscribe({
+          next: () => {
+            this.isFavorite = true;
+          }
+        });
+      } else {
+        this.removeFavoriteUseCase.execute(this.currentUser.id, this.book.id).subscribe({
+          next: () => {
+            this.isFavorite = false;
+          }
+        });
+      }
     }
   }
 

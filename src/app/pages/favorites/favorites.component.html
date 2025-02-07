@@ -1,1 +1,25 @@
-<p>favorites works!</p>
+<app-navbar></app-navbar>
+<main class="flex justify-center">
+    <section class="bg-white p-6 w-[80%] m-10 min-h-screen">
+        <h1 class="text-2xl font-bold mb-6">Mis Favoritos</h1>
+        
+        <div *ngIf="loading" class="text-center py-10">
+            Cargando favoritos...
+        </div>
+
+        <div *ngIf="error" class="text-center text-red-500 py-10">
+            {{error}}
+        </div>
+
+        <div *ngIf="!loading && !error" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div *ngFor="let book of books">
+                <app-post [book]="book"></app-post>
+            </div>
+        </div>
+
+        <div *ngIf="!loading && !error && books.length === 0" 
+             class="text-center text-gray-500 py-10">
+            No tienes libros favoritos
+        </div>
+    </section>
+</main>

@@ -77,4 +77,8 @@ export class NavbarComponent {
   postBook() {
     this.router.navigate(['/post']);
   }
+
+  goFavorites() {
+    this.router.navigate(['/favorites']);
+  }
 }

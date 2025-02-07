@@ -6,9 +6,9 @@ import { BookRespositoryService } from '../infrastructure/book-respository.servi
 })
 export class GetFavoritesUseCaseService {
 
-  constructor(private getFavorites : BookRespositoryService) { }
+  constructor(private bookRepository : BookRespositoryService) { }
 
   execute(userId: number) {
-    return this.getFavorites.getFavorites(userId);
+    return this.bookRepository.getFavorites(userId);
   }
 }

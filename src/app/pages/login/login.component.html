@@ -1,54 +1,78 @@
 <p-toast />
-<main class="flex justify-center items-center min-h-screen">
-    <section class="w-1/2 bg-amber-500 p-4">
-        <form [formGroup]="loginForm" class="flex flex-col" (ngSubmit)="onLogin()">
-            <label for="email">Email</label>
-            <input type="email" formControlName="email" class="bg-white">
-            <span *ngIf="loginForm.get('email')?.errors?.['required'] && loginForm.get('email')?.touched" 
-                  class="text-red-500">Email es requerido</span>
+<main class="flex justify-center items-center min-h-screen bg-gray-100">
+    <div class="surface-card p-8 shadow-2 border-round w-full lg:w-4/12">
+        <div class="text-center mb-5">
+            <h1 class="text-900 text-3xl font-medium mb-3">Bienvenido</h1>
+            <p class="text-600 font-medium">Inicia sesión para continuar</p>
+        </div>
 
-            <label for="password">Password</label>
-            <input type="password" formControlName="password" class="bg-white">
-            <span *ngIf="loginForm.get('password')?.errors?.['required'] && loginForm.get('password')?.touched"
-                  class="text-red-500">Contraseña es requerida</span>
+        <form [formGroup]="loginForm" class="flex flex-col gap-4" (ngSubmit)="onLogin()">
+            <div class="flex flex-col gap-2">
+                <label for="email" class="font-medium">Email</label>
+                <input type="email" id="email" formControlName="email"
+                    class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <small class="text-red-500" *ngIf="loginForm.get('email')?.errors?.['required'] && loginForm.get('email')?.touched">
+                    Email es requerido
+                </small>
+            </div>
 
-            <button type="submit" [disabled]="!loginForm.valid" 
-                    class="hover:cursor-pointer p-2 border m-2">Login</button>
-            <p class="text-center">
-                ¿No tienes cuenta?
-                <a href="#" class="text-blue-700 hover:underline" (click)="showDialog()">Regístrate aquí</a>
-            </p>
+            <div class="flex flex-col gap-2">
+                <label for="password" class="font-medium">Contraseña</label>
+                <input type="password" id="password" formControlName="password"
+                    class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <small class="text-red-500" *ngIf="loginForm.get('password')?.errors?.['required'] && loginForm.get('password')?.touched">
+                    Contraseña es requerida
+                </small>
+            </div>
+
+            <button type="submit" [disabled]="!loginForm.valid"
+                class="w-full py-2 px-4 bg-blue-500 text-white rounded-lg hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed">
+                Iniciar Sesión
+            </button>
+
+            <div class="text-center mt-4">
+                <span class="text-gray-600">¿No tienes cuenta? </span>
+                <a class="text-blue-500 cursor-pointer hover:text-blue-700" (click)="showDialog()">
+                    Regístrate aquí
+                </a>
+            </div>
         </form>
-    </section>
+    </div>
 </main>
 
-<p-dialog header="Registro de Usuario" [(visible)]="visible" [modal]="true" [style]="{ width: '400px' }">
+<p-dialog header="Registro de Usuario" [(visible)]="visible" [modal]="true" [style]="{width: '450px'}">
     <form [formGroup]="registerForm" class="flex flex-col gap-4">
-        <div class="flex flex-col">
-            <label for="name">Nombre</label>
-            <input type="text" formControlName="name" class="border p-2">
-            <span *ngIf="registerForm.get('name')?.errors?.['required'] && registerForm.get('name')?.touched"
-                  class="text-red-500">Nombre es requerido</span>
+        <div class="flex flex-col gap-2">
+            <label for="name" class="font-medium">Nombre</label>
+            <input type="text" id="name" formControlName="name"
+                class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <small class="text-red-500" *ngIf="registerForm.get('name')?.errors?.['required'] && registerForm.get('name')?.touched">
+                Nombre es requerido
+            </small>
         </div>
 
-        <div class="flex flex-col">
-            <label for="email">Email</label>
-            <input type="email" formControlName="email" class="border p-2">
-            <span *ngIf="registerForm.get('email')?.errors?.['required'] && registerForm.get('email')?.touched"
-                  class="text-red-500">Email es requerido</span>
+        <div class="flex flex-col gap-2">
+            <label for="register-email" class="font-medium">Email</label>
+            <input type="email" id="register-email" formControlName="email"
+                class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <small class="text-red-500" *ngIf="registerForm.get('email')?.errors?.['required'] && registerForm.get('email')?.touched">
+                Email es requerido
+            </small>
         </div>
 
-        <div class="flex flex-col">
-            <label for="password">Contraseña</label>
-            <input type="password" formControlName="password" class="border p-2">
-            <span *ngIf="registerForm.get('password')?.errors?.['required'] && registerForm.get('password')?.touched"
-                  class="text-red-500">Contraseña es requerida</span>
+        <div class="flex flex-col gap-2">
+            <label for="register-password" class="font-medium">Contraseña</label>
+            <input type="password" id="register-password" formControlName="password"
+                class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <small class="text-red-500" *ngIf="registerForm.get('password')?.errors?.['required'] && registerForm.get('password')?.touched">
+                Contraseña es requerida
+            </small>
         </div>
 
-        <div class="flex justify-center">
-            <button type="submit" [disabled]="!registerForm.valid"
-                    class="p-2 bg-blue-500 text-white rounded cursor-pointer hover:opacity-90"
-                    (click)="registerUser()">Registrar</button>
-        </div>
+        <button type="submit" [disabled]="!registerForm.valid"
+            class="w-full py-2 px-4 bg-blue-500 text-white rounded-lg hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed"
+            (click)="registerUser()">
+            Registrar
+        </button>
     </form>
 </p-dialog>
