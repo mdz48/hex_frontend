@@ -3,6 +3,7 @@ import { IBook } from '../domain/ibook';
 import { Observable } from 'rxjs';
 import { Book } from '../domain/book';
 import { HttpClient } from '@angular/common/http';
+import { UpdateBook } from '../domain/create-book';
 
 @Injectable({
   providedIn: 'root'
@@ -28,7 +29,7 @@ export class BookRespositoryService implements IBook {
     return this.http.post<Book>(this.API_URL,  {title, author, description});
   }
 
-  update(book: Book): Observable<Book> {
+  update(id: number,book: UpdateBook): Observable<Book> {
     return this.http.put<Book>(`${this.API_URL}/${book.id}`, book);
   }
 
